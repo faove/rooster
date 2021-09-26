@@ -1,0 +1,5 @@
+# Gulp
+package.json
+npm-debug.log
+node_modules/**
+.env
