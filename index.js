@@ -8,6 +8,38 @@ const tick = async(config,binanceClient) => {
     //const {apiKey, apiSecret} = binanceClient;
     const market = `${asset}/${base}`;
     console.log(market);
+    let orderbook = await binanceClient.fetchOrderBook(market);
+    
+    // console.log (binanceClient.id, orderbook.bids[0])
+    
+    const balances  = await binanceClient.fetchBalance();
+    
+    
+    const assetBalance = balances.free[asset];
+    console.log(assetBalance);
+    const baseBalance = balances.free[base];
+    
+    console.log(baseBalance);
+    
+    if (assetBalance > 0){
+
+        console.log('assetBalance +')
+        console.log (orderbook.bids[0])
+        console.log('assetBalance BNB')
+        //console.log(assetBalance)
+        console.log('---------------baseBalance USDT-----------------')
+        //console.log(baseBalance)
+        orderbook.bids.forEach(function(item) {
+            let c_item = count(item)
+            console.log('c_item')
+            console.log(c_item)
+
+        });
+        // sell 1 BNB/USDT for market price, sell a bitcoin for dollars immediately
+        //console.log(binanceClient.id, await binanceClient.createMarketSellOrder(market, assetBalance))
+    }
+    
+    
     // const balance = await binanceClient.watchBalance(market)
     // console.log(new Date(), balance);
     // console.log(binanceClient.has['watchBalance']);
@@ -48,13 +80,11 @@ const tick = async(config,binanceClient) => {
     
     // console.log(await binanceClient.loadMarkets())
     //console.log(await binanceClient.fetchOrderBook(market))
-    let orderbook = await binanceClient.fetchOrderBook(market);
     // let bid = orderbook.bids.length ? orderbook.bids[0][0] : undefined
     // let ask = orderbook.asks ? orderbook.asks[0][0] : undefined
     // let spread1 = (bid && ask) ? ask - bid : undefined
     // console.log (binanceClient.id, 'market price', { bid, ask, spread1 })
     // console.log (binanceClient.id, 'market price', { orderbook })
-    console.log (binanceClient.id, orderbook.bids[0])
     
     //fetchtrades trae array de buy y sell 
     // console.log (binanceClient.id,  await binanceClient.fetchTrades(market))
@@ -63,7 +93,6 @@ const tick = async(config,binanceClient) => {
     // console.log (binanceClient.id,  await binanceClient.fetchCurrencies())
     // const sellPrice = marketPrice * (1 + spread);
     // const buyPrice  = marketPrice * (1 - spread);
-    const balances  = await binanceClient.fetchBalance();
 
     // console.log(`
     //     Balances ${balances}...
@@ -75,11 +104,6 @@ const tick = async(config,binanceClient) => {
     // const account_balance = binanceClient.fetch_balance();
 
     
-    const assetBalance = balances.free[asset];
-    // console.log(assetBalance);
-    const baseBalance = balances.free[base];
-    
-    // console.log(baseBalance);
     
     // const sellVolumen = assetBalance * allocation;
     // const buyVolumen  = (baseBalance* allocation) / marketPrice;
@@ -98,10 +122,6 @@ const tick = async(config,binanceClient) => {
     //     Creada orden de compra límite por ${buyVolumen}@${buyPrice}
     // `);
     //market_order_placement = bittrex.create_market_sell_order ('ETH / BTC', .001)
-
-     // sell 1 BTC/USD for market price, sell a bitcoin for dollars immediately
-     // console.log (okcoinusd.id, await okcoinusd.createMarketSellOrder ('BTC/USD', 1))
-
      // buy 1 BTC/USD for $2500, you pay $2500 and receive ฿1 when the order is closed
      // console.log (okcoinusd.id, await okcoinusd.createLimitBuyOrder ('BTC/USD', 1, 2500.00))
  
